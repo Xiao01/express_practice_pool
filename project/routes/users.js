@@ -14,11 +14,11 @@ router.get('/', function(req, res, next) {
 
 //访问登录页面
 router.get('/login', function (req, res, next) {
-	res.render("login",{title:"访问登录页面"});
+	res.render("login",{title:"登录页面"});
 });
 //访问注册页面
 router.get('/regist', function (req, res, next) {
-	res.render('regist',{title:"访问注册页面"});
+	res.render('regist',{title:"注册页面"});
 
 });
 //提交注册账号
