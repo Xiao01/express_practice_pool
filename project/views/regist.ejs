@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <title>注册页</title>
+  <%- include("./header.ejs") %>
+</head>
+
+<body>
+
+  <div class="col-lg-7">
+    <form action="/users/regist" method="post">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter email">
+
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password confirm</label>
+        <input type="password" class="form-control" name="password2" placeholder="Password confirm">
+      </div>
+
+      <div class="form-group">
+        <p class="bs-component">
+          <button type="submit" class="btn btn-primary btn-lg btn-block">注册"</button>
+        </p>
+      </div>
+
+    </form>
+    <div class="form-group">
+      <div>已有账号，请立即 <a href="/users/login">登录</a></div>
+    </div>
+  </div>
+</body>
+<%- include("./footer.ejs") %>
+
+</html>
