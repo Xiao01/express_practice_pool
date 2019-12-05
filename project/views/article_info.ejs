@@ -5,35 +5,64 @@
 
 <div class="col-lg-7">
     <legend><%= title %></legend>
-    <form action="/write" method="post">
+    <form action="/write_update" method="post">
+        <input style="display: none;" name="old_title" value="<%=article.title%>" />
+        <div class="form-group">
+            <label class="col-form-label" for="inputDefault">文章作者</label>
+            <input name="author" type="text" class="form-control" id="inputDefault" value="<%=article.author%>"
+                readonly>
+        </div>
         <div class="form-group">
             <label class="col-form-label" for="inputDefault">文章标题</label>
-            <input name="title" type="text" class="form-control" placeholder="标题不小于10个字" id="inputDefault" value="<%=article.title%>">
+            <% if(username){ if( username== article.author){ %>
+                <input name="title" type="text" class="form-control" placeholder="标题不小于10个字" id="inputDefault"
+                value="<%=article.title%>">
+            <% }} else{  %>
+                <input name="title" type="text" class="form-control" placeholder="标题不小于10个字" id="inputDefault"
+                value="<%=article.title%>" readonly>
+            <%}%> 
         </div>
         <div class="form-group">
             <label for="exampleSelect2">文章类型</label>
-            <select name="type" multiple class="form-control" id="exampleSelect2">
-                <option>科技</option>
-                <option>动画</option>
-                <option>游戏</option>
-                <option>舞蹈</option>
-                <option>生活</option>
+           
+            <select <% if(username){ if( username== article.author){}} else{ %>
+             readonly
+             <%}%> 
+             name="type" multiple class="form-control" id="exampleSelect2">
+		
+                    <%   var types=["科技","动画","游戏","舞蹈","生活"];
+                        var _types = article.type;
+                    for (var type of types )  {  %>
+            <option
+            
+            <%   for (var _type of _types ){ 
+                            if( type.indexOf(_type) >=0 ){ %> selected="selected" <%  } }%>  
+                           
+                              > <%=type  %></option>
+            <%}%>
             </select>
+           
         </div>
         <div class="form-group">
             <label for="exampleTextarea">文章内容</label>
+            <% if(username){ if( username== article.author){ %>
             <textarea  name="substance" class="form-control" id="exampleTextarea" rows="3" placeholder="内容不小于100个字"><%=article.substance%></textarea>
+            <% }} else{  %>
+            <textarea readonly name="substance" class="form-control" id="exampleTextarea" rows="3" placeholder="内容不小于100个字"><%=article.substance%></textarea>
+            <%}%> 
         </div>
         <div class="form-group">
             <label for="exampleInputFile">上传图片</label>
-            <input name="uploadpic" type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+            <input name="uploadpic" type="file" value="<%=article.uploadpic%>" class="form-control-file"
+                id="exampleInputFile" aria-describedby="fileHelp">
             <small id="fileHelp" class="form-text text-muted">图片不能大于5M</small>
         </div>
+
         <div class="form-group">
-                <p class="bs-component">
-                  <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
-                </p>
-              </div>
+            <p class="bs-component">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">修改</button>
+            </p>
+        </div>
     </form>
 </div>
 

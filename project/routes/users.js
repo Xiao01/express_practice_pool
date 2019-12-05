@@ -4,10 +4,11 @@ var model = require('../model');
 const USERS_COLLECTION = "users";
 /* 访问用户列表页 */
 router.get('/', function(req, res, next) {
+	var username = req.session.username || "";
 	model.connect(function(db){
 		db.collection(USERS_COLLECTION).find().toArray(function(arr,docs){
 			console.log("用户列表："+ JSON.stringify(docs));
-			res.render('users', { title: '用户列表页面',data: docs});
+			res.render('users', { title: '用户列表页面',data: docs,username: username});
 		})
 	})
 });

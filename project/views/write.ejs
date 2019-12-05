@@ -13,11 +13,15 @@
         <div class="form-group">
             <label for="exampleSelect2">文章类型</label>
             <select name="type" multiple class="form-control" id="exampleSelect2">
-                <option>科技</option>
+               <%   var types=["科技","动画","游戏","舞蹈","生活"];
+                    for (var type of types ){ %>
+                        <option > <%=type  %></option>
+                        <%}%>
+                <!-- <option>科技</option>
                 <option>动画</option>
                 <option>游戏</option>
                 <option>舞蹈</option>
-                <option>生活</option>
+                <option>生活</option> -->
             </select>
         </div>
         <div class="form-group">
