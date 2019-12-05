@@ -29,15 +29,20 @@
 <body>
 
 
-	<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+	 <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
       <div class="container">
-	  
-        <a href="/" class="navbar-brand">首页</a>
+	  <!-- <%- include('bar.ejs',{username:username})%> -->
+    <a href="/" class="nav-link" >
+      <img src="/images/home.png" style="width:30px;height:30px ;" alt="首页"/>
+  </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">首页</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
               <div class="dropdown-menu" aria-labelledby="themes">
@@ -67,7 +72,10 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../help/">Help</a>
+              <a class="nav-link" href="/write">
+                <img src="/images/write.png" style="width:30px;height:30px ;" alt="写文章"/>
+                写文章
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
@@ -85,18 +93,27 @@
               </div>
             </li>
 			<li class="nav-item">
-              <a class="nav-link" href="/users">用户中心</a>
+              <a class="nav-link" href="/users">用户列表</a>
             </li>
           </ul>
 
         </div>
       
 		<div class="nav-item my-2 my-lg-0">
-
-                    <div class="btn btn-secondary my-2 "><a href="/users/regist">注册</a></div>
-                    <div class="btn btn-secondary my-2 my-sm-0"> <a href="/users/login">登录</a> </div>
-        </div>
+    
+      <% if(username){%>
+        <a  href="/users/userinfo"><img src="/images/person.png" style="width:30px;height:30px ;" alt="<%=username%>"/>
+          <span style="color: silver;"><%=username%></span></a>
+        <a href="/users/logout"> <img src="/images/exit.png" style="width:30px;height:30px ;" alt="退出"/>退出</a>
+      <%}else{%>
+        <div class="btn btn-secondary my-2 "><a href="/users/regist">注册</a></div>
+        <div class="btn btn-secondary my-2 my-sm-0"> <a href="/users/login">登录</a> </div>
+		  <%}%>
     </div>
-	</div>
+    </div>
+  </div> 
+  
+
+
 	<div class="container">
 

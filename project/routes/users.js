@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var model = require('../model');
-const USERS_COLLECTION = "users"
+const USERS_COLLECTION = "users";
 /* 访问用户列表页 */
 router.get('/', function(req, res, next) {
 	model.connect(function(db){
 		db.collection(USERS_COLLECTION).find().toArray(function(arr,docs){
 			console.log("用户列表："+ JSON.stringify(docs));
-			res.render('users', { title: '用户列表页',data: docs});
+			res.render('users', { title: '用户列表页面',data: docs});
 		})
 	})
 });
@@ -19,8 +19,16 @@ router.get('/login', function (req, res, next) {
 //访问注册页面
 router.get('/regist', function (req, res, next) {
 	res.render('regist',{title:"注册页面"});
-
 });
+
+
+//提交用户登出
+router.get('/logout', function (req, res, next) {
+	req.session.username=null;
+	req.session.password=null;
+	res.redirect("/users/login");
+});
+
 //提交注册账号
 router.post('/regist', function (req, res, next) {
 	console.log(req.body.username)
@@ -64,6 +72,9 @@ router.post('/login', function (req, res, next) {
 					res.send("<br>  登录失败,<a href='/users/login'>重新登录</a>");
 				} else {
 					if( docs.length>0){
+						//登录成功，进行session存储
+						req.session.username=data.username;
+						req.session.password=data.password;
 						res.redirect('/');
 					}else{
 						res.send("<br> 账号密码错误，<a href='/users/login'>重新登录</a>");
@@ -76,5 +87,6 @@ router.post('/login', function (req, res, next) {
 		res.send("<br> 登录失败, <a href='/users/login'>重新登录</a>"+" <br>用户名："+ req.body.username  +" <br>密码："+req.body.password );
 	}
 });
+
 
 module.exports = router;

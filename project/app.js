@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -19,8 +20,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//session配置
+app.use(session({
+  secret: 'session',
+  resave: true,
+  saveUninitialized:true,
+  cookie: { maxAge:1000*60*5 }
+}))
+//登录拦截
+app.get('*',function(req,res,next){
+	var path = req.path;
+	var username =req.session.username;
+	console.log("登录拦截",username  ," ,path:",path);
+	if(path =="/users" || path =="/" || path =="/write"){
+		if(!username){
+			console.log("跳转到登录页面")
+			res.redirect("/users/login");
+		}
+	}
+	next()
+})
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
