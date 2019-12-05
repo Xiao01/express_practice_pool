@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var model = require('../model');
+var moment = require('moment');
+
 const USERS_COLLECTION = "users";
 /* 访问用户列表页 */
 router.get('/', function(req, res, next) {
@@ -95,6 +97,39 @@ router.post('/login', function (req, res, next) {
 
 router.get('/userinfo', function (req, res, next) {
 	var username = req.session.username || "";
+	res.render('userinfo',{title:"修改用户密码",username: username});
+});
+
+
+//修改用户详情页
+router.post('/userinfo_update', function (req, res, next) {
+	console.log("/修改用户详情页");
+	var username = req.session.username || "";
+	var whereData = { "username": req.session.username };
+	moment.locale('zh-cn');
+	var _today = moment().format('YYYY-MM-DD HH:mm:ss');
+	var data = {
+		password: req.body.password,
+		last_datetime: _today
+	}
+	var updateDat = { $set: data };
+	if(req.body.password !=null && req.body.password2 !=null && req.body.password == req.body.password2){
+		model.connect(function (db) {
+			db.collection(USERS_COLLECTION).updateOne(whereData, updateDat, function (err, result) {
+				if (err) {
+					console.log('Error:' + err);
+				} else {
+					console.log(result);
+					req.session.username ="";
+					res.redirect('login');
+				}
+			});
+		})
+	}
+	
 	res.render('userinfo',{title:"用户详情页面",username: username});
 });
+
+
+
 module.exports = router;

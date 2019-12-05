@@ -100,7 +100,6 @@ router.post('/write_update', function (req, res, next) {
 	var updateDat = { $set: data };
 	if (data.title != null && data.type != null && data.substance != null && data.uploadpic != null) {
 		model.connect(function (db) {
-			//	db.collection(ARTICLES_COLLECTION).find(whereData).toArray(function (err, docs) {
 			db.collection(ARTICLES_COLLECTION).updateOne(whereData, updateDat, function (err, result) {
 				if (err) {
 					console.log('Error:' + err);
