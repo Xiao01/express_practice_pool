@@ -90,4 +90,11 @@ router.post('/login', function (req, res, next) {
 });
 
 
+
+//获取用户详情
+
+router.get('/userinfo', function (req, res, next) {
+	var username = req.session.username || "";
+	res.render('userinfo',{title:"用户详情页面",username: username});
+});
 module.exports = router;
