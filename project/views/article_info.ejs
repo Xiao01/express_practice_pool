@@ -1,10 +1,13 @@
 <%- include("./header.ejs",{username:username}) %>
 
-<p>Welcome to <%= title %></p>
 
 
 <div class="col-lg-7">
+        <% if(username){ if( username== article.author){ %>
     <legend><%= title %></legend>
+    <% }} else{  %>
+        <legend><%= title %>,本文仅限作者可修改</legend>
+        <%}%> 
     <form action="/write_update" method="post">
         <input style="display: none;" name="old_title" value="<%=article.title%>" />
         <div class="form-group">
